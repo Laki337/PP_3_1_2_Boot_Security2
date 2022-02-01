@@ -37,20 +37,20 @@ public class AdminController {
 		return "adminPage";
 	}
 	
-//	@GetMapping(value = "/newUser")
-//	public String newUser(Model model) {
-//		System.err.println("RAZ");
-//		model.addAttribute("user", new User());
-//		model.addAttribute("roles", roleService.getRoles());
-//		return "createNew";
-//	}
-//
-//	@GetMapping(value = "/edit/{id}")
-//	public String editUser(@PathVariable("id") long id, Model model) {
-//		model.addAttribute("user", userService.getById(id));
-//		model.addAttribute("roles", roleService.getRoles());
-//		return "editUser";
-//	}
+	@GetMapping(value = "/newUser")
+	public String newUser(Model model) {
+		System.err.println("RAZ");
+		model.addAttribute("user", new User());
+		model.addAttribute("roles", roleService.getRoles());
+		return "adminPage";
+	}
+
+	@GetMapping(value = "/edit/{id}")
+	public String editUser(@PathVariable("id") long id, Model model) {
+		model.addAttribute("user", userService.getById(id));
+		model.addAttribute("roles", roleService.getRoles());
+		return "adminPage";
+	}
 	@PostMapping(value = "/edit/{id}")
 	public String editUser(@ModelAttribute User user, @RequestParam(value = "rolez") Long[] roles) {
 	
