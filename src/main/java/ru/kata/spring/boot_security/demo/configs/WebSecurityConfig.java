@@ -30,15 +30,27 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.formLogin().loginPage("/login").successHandler(successUserHandler).loginProcessingUrl("/login").usernameParameter("j_username").passwordParameter("j_password").permitAll();
+		http.formLogin()
+				.loginPage("/login")
+				.successHandler(successUserHandler)
+				.loginProcessingUrl("/login")
+				.usernameParameter("j_username")
+				.passwordParameter("j_password")
+				.permitAll();
 		
 		
-		http.authorizeRequests().antMatchers("/login").anonymous().antMatchers("/admin").permitAll()//access("hasRole('ADMIN')")
-				.antMatchers("/user").permitAll()//access("hasAnyRole('ADMIN', 'USER')")
-		 .antMatchers("/").authenticated().anyRequest().authenticated();
+		http.authorizeRequests()
+				.antMatchers("/login").anonymous()
+				.antMatchers("/admin").access("hasRole('ROLE_ADMIN')")
+				.antMatchers("/user").access("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+				.antMatchers("/").authenticated()
+				.anyRequest().authenticated();
 		
-		http.logout().permitAll().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login?logout").and().csrf().disable();
-		
+		http.logout()
+				.permitAll()
+				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+				.logoutSuccessUrl("/login?logout")
+				.and().csrf().disable();
 	}
 	
 	@Override
